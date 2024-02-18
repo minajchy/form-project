@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";  
+import FormInput from "./components/FormInput";
 
-function App() {
+const App = () => {
+  const [users, setUsers] = useState([]);
+
+  const addUserHandler = (user) => {
+    setUsers((prevUsers) => [
+      ...prevUsers,
+      {...user, id: Math.random().toString()}
+    ])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <FormInput onAddUser={addUserHandler}></FormInput>
+      <div>
+        <h2>User List</h2>
+        <ul>
+          {users.map ((user) => (
+            <li key={user.id}>
+              {user.userName} ({user.age} Years old)
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
