@@ -1,29 +1,23 @@
-import React, { useState } from "react";  
-import FormInput from "./components/FormInput";
+import React, { useState } from "react";
+import AddUser from "./components/Users/AddUser";
+import UsersList from "./components/Users/UsersList";
 
 const App = () => {
-  const [users, setUsers] = useState([]);
+  const [usersList, setUsersList] = useState([]);
 
-  const addUserHandler = (user) => {
-    setUsers((prevUsers) => [
-      ...prevUsers,
-      {...user, id: Math.random().toString()}
-    ])
-  }
+  const addUserHandler = (uName, uAge) => {
+    setUsersList((prevUsersList) => {
+      return [
+        ...prevUsersList,
+        { name: uName, age: uAge, id: Math.random().toString() },
+      ];
+    });
+  };
 
   return (
     <div>
-      <FormInput onAddUser={addUserHandler}></FormInput>
-      <div>
-        <h2>User List</h2>
-        <ul>
-          {users.map ((user) => (
-            <li key={user.id}>
-              {user.userName} ({user.age} Years old)
-            </li>
-          ))}
-        </ul>
-      </div>
+      <AddUser onAddUser={addUserHandler}></AddUser>
+      <UsersList users={usersList}></UsersList>
     </div>
   );
 };
